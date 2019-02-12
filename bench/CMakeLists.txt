@@ -15,5 +15,5 @@ target_compile_features(gpuroofperf-bench PUBLIC cxx_std_11)
 if(APPLE)
 	# We need to add the default path to the driver (libcuda.dylib) as an rpath,
 	# so that the static cuda runtime can find it at runtime.
-	set_property(TARGET particle_test PROPERTY BUILD_RPATH ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
+	set_property(TARGET gpuroofperf-bench PROPERTY BUILD_RPATH ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
 endif()
