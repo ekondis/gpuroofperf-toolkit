@@ -133,7 +133,8 @@ int save_results(const string &file_name, const string &dev_name, const benchmar
 }
 
 int main(int argc, const char *argv[]) {
-	cout << "gpuroofperf-bench (CUDA) microbenchmarking tool" << endl << endl;
+	const string VERSION = "v.0.9.0";
+	cout << "gpuroofperf-bench (CUDA) microbenchmarking tool " << VERSION << endl << endl;
 
 	bool show_help = false;
 	int i_device = -1;
@@ -167,22 +168,22 @@ int main(int argc, const char *argv[]) {
 	manager.run_computations();
 	manager.run_computations();
 	manager.run_computations();
-	cout << "Done." << std::endl;
+	cout << "Done" << std::endl;
 	cout << "Running load/store intensive benchmarks... " << std::flush;
 	manager.run_shmem_ops();
 	manager.run_shmem_ops();
 	manager.run_shmem_ops();
-	cout << "Done." << std::endl;
+	cout << "Done" << std::endl;
 	cout << "Running memory intensive benchmarks...     " << std::flush;
 	manager.run_memory_ops();
 	manager.run_memory_ops();
 	manager.run_memory_ops();
-	cout << "Done." << std::endl;
+	cout << "Done" << std::endl;
 	cout << "Running L2 cache intensive benchmarks...   " << std::flush;
 	manager.run_cache_ops();
 	manager.run_cache_ops();
 	manager.run_cache_ops();
-	cout << "Done." << std::endl;
+	cout << "Done" << std::endl;
 
 	// show and write output results
 	const auto& res = manager.get_results();
