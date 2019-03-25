@@ -10,7 +10,7 @@
 namespace benchmark_kernels {
 
 	const double constVal  = 13.1;
-	const float  constValf = (float)constVal;
+	const float  constValf = static_cast<float>(constVal);
 	const int4 constVali4  = make_int4(3,7,13,17);
 
 	typedef texture<float, 1, cudaReadModeElementType> texture_float;
@@ -160,27 +160,27 @@ namespace benchmark_kernels {
 		cudaBindTexture(0, texdataI4, ad, VECTOR_SIZE*sizeof(double));
 
 		initializeEvents(&start, &stop);
-		kmemaccess<char, GRANULARITY, true, true, false><<< dimGrid_char, dimBlock >>>(constVal, (char*)ad, (char*)cd);
+		kmemaccess<char, GRANULARITY, true, true, false><<< dimGrid_char, dimBlock >>>(static_cast<char>(constVal), reinterpret_cast<char*>(ad), reinterpret_cast<char*>(cd));
 		float kernel_time_vadd_ch = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<char, GRANULARITY, true, false, false><<< dimGrid_char, dimBlock >>>(constVal, (char*)ad, (char*)cd);
+		kmemaccess<char, GRANULARITY, true, false, false><<< dimGrid_char, dimBlock >>>(static_cast<char>(constVal), reinterpret_cast<char*>(ad), reinterpret_cast<char*>(cd));
 		float kernel_time_vget_ch = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<char, GRANULARITY, false, true, false><<< dimGrid_char, dimBlock >>>(constVal, (char*)ad, (char*)cd);
+		kmemaccess<char, GRANULARITY, false, true, false><<< dimGrid_char, dimBlock >>>(static_cast<char>(constVal), reinterpret_cast<char*>(ad), reinterpret_cast<char*>(cd));
 		float kernel_time_vset_ch = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<short, GRANULARITY, true, true, false><<< dimGrid_short, dimBlock >>>(constVal, (short*)ad, (short*)cd);
+		kmemaccess<short, GRANULARITY, true, true, false><<< dimGrid_short, dimBlock >>>(static_cast<short>(constVal), reinterpret_cast<short*>(ad), reinterpret_cast<short*>(cd));
 		float kernel_time_vadd_sh = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<short, GRANULARITY, true, false, false><<< dimGrid_short, dimBlock >>>(constVal, (short*)ad, (short*)cd);
+		kmemaccess<short, GRANULARITY, true, false, false><<< dimGrid_short, dimBlock >>>(static_cast<short>(constVal), reinterpret_cast<short*>(ad), reinterpret_cast<short*>(cd));
 		float kernel_time_vget_sh = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<short, GRANULARITY, false, true, false><<< dimGrid_short, dimBlock >>>(constVal, (short*)ad, (short*)cd);
+		kmemaccess<short, GRANULARITY, false, true, false><<< dimGrid_short, dimBlock >>>(static_cast<short>(constVal), reinterpret_cast<short*>(ad), reinterpret_cast<short*>(cd));
 		float kernel_time_vset_sh = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
@@ -204,43 +204,43 @@ namespace benchmark_kernels {
 		float kernel_time_vgettex_dp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<float, GRANULARITY, true, true, false><<< dimGrid_float, dimBlock >>>(constValf, (float*)ad, (float*)cd);
+		kmemaccess<float, GRANULARITY, true, true, false><<< dimGrid_float, dimBlock >>>(constValf, reinterpret_cast<float*>(ad), reinterpret_cast<float*>(cd));
 		float kernel_time_vadd_sp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<float, GRANULARITY, true, false, false><<< dimGrid_float, dimBlock >>>(constValf, (float*)ad, (float*)cd);
+		kmemaccess<float, GRANULARITY, true, false, false><<< dimGrid_float, dimBlock >>>(constValf, reinterpret_cast<float*>(ad), reinterpret_cast<float*>(cd));
 		float kernel_time_vget_sp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<float, GRANULARITY, false, true, false><<< dimGrid_float, dimBlock >>>(constValf, (float*)ad, (float*)cd);
+		kmemaccess<float, GRANULARITY, false, true, false><<< dimGrid_float, dimBlock >>>(constValf, reinterpret_cast<float*>(ad), reinterpret_cast<float*>(cd));
 		float kernel_time_vset_sp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<float, GRANULARITY, true, true, true><<< dimGrid_float, dimBlock >>>(constValf, (float*)ad, (float*)cd);
+		kmemaccess<float, GRANULARITY, true, true, true><<< dimGrid_float, dimBlock >>>(constValf, reinterpret_cast<float*>(ad), reinterpret_cast<float*>(cd));
 		float kernel_time_vcpytex_sp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<float, GRANULARITY, true, false, true><<< dimGrid_float, dimBlock >>>(constValf, (float*)ad, (float*)cd);
+		kmemaccess<float, GRANULARITY, true, false, true><<< dimGrid_float, dimBlock >>>(constValf, reinterpret_cast<float*>(ad), reinterpret_cast<float*>(cd));
 		float kernel_time_vgettex_sp = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<int4, GRANULARITY, true, true, false><<< dimGrid_i4, dimBlock >>>(constVali4, (int4*)ad, (int4*)cd);
+		kmemaccess<int4, GRANULARITY, true, true, false><<< dimGrid_i4, dimBlock >>>(constVali4, reinterpret_cast<int4*>(ad), reinterpret_cast<int4*>(cd));
 		float kernel_time_vadd_i4 = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<int4, GRANULARITY, true, false, false><<< dimGrid_i4, dimBlock >>>(constVali4, (int4*)ad, (int4*)cd);
+		kmemaccess<int4, GRANULARITY, true, false, false><<< dimGrid_i4, dimBlock >>>(constVali4, reinterpret_cast<int4*>(ad), reinterpret_cast<int4*>(cd));
 		float kernel_time_vget_i4 = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<int4, GRANULARITY, false, true, false><<< dimGrid_i4, dimBlock >>>(constVali4, (int4*)ad, (int4*)cd);
+		kmemaccess<int4, GRANULARITY, false, true, false><<< dimGrid_i4, dimBlock >>>(constVali4, reinterpret_cast<int4*>(ad), reinterpret_cast<int4*>(cd));
 		float kernel_time_vset_i4 = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<int4, GRANULARITY, true, true, true><<< dimGrid_i4, dimBlock >>>(constVali4, (int4*)ad, (int4*)cd);
+		kmemaccess<int4, GRANULARITY, true, true, true><<< dimGrid_i4, dimBlock >>>(constVali4, reinterpret_cast<int4*>(ad), reinterpret_cast<int4*>(cd));
 		float kernel_time_vcpytex_i4 = finalizeEvents(start, stop);
 
 		initializeEvents(&start, &stop);
-		kmemaccess<int4, GRANULARITY, true, false, true><<< dimGrid_i4, dimBlock >>>(constVali4, (int4*)ad, (int4*)cd);
+		kmemaccess<int4, GRANULARITY, true, false, true><<< dimGrid_i4, dimBlock >>>(constVali4, reinterpret_cast<int4*>(ad), reinterpret_cast<int4*>(cd));
 		float kernel_time_vgettex_i4 = finalizeEvents(start, stop);
 
 		// Unbind textures
@@ -263,7 +263,7 @@ namespace benchmark_kernels {
 		CUDA_SAFE_CALL( cudaBindTextureToArray(texdataF_2D, cudaArrayA, texdataF_2D.channelDesc) );
 
 		initializeEvents(&start, &stop);
-		kmemaccess2D<float><<< dimGrid2D_float, dimBlock2D >>>(constValf, (float*)cd);
+		kmemaccess2D<float><<< dimGrid2D_float, dimBlock2D >>>(constValf, reinterpret_cast<float*>(cd));
 		float kernel_time_2d_tex_f = finalizeEvents(start, stop);
 
 		CUDA_SAFE_CALL( cudaUnbindTexture( texdataF_2D ) );
@@ -280,7 +280,7 @@ namespace benchmark_kernels {
 		CUDA_SAFE_CALL( cudaBindTextureToArray(texdataD_2D, cudaArrayA, texdataD_2D.channelDesc) );
 
 		initializeEvents(&start, &stop);
-		kmemaccess2D<double><<< dimGrid2D, dimBlock2D >>>(constVal, (double*)cd);
+		kmemaccess2D<double><<< dimGrid2D, dimBlock2D >>>(constVal, reinterpret_cast<double*>(cd));
 		float kernel_time_2d_tex_d = finalizeEvents(start, stop);
 
 		CUDA_SAFE_CALL( cudaUnbindTexture( texdataD_2D ) );
